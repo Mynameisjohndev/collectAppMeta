@@ -1,27 +1,20 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
+import 'package:app_collect_meta/form_create_collect.dart';
 import 'package:app_collect_meta/helpers/Location.dart';
 import 'package:app_collect_meta/helpers/NotificationConfigs.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:workmanager/workmanager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 var executeTaskCheckLocationAndPermission = false;
 
 @pragma('vm:entry-point')
 void onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
   if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
       service.setAsForegroundService();
@@ -62,7 +55,6 @@ Future stopNotification() async {
   var isRunning = await service.isRunning();
   service.startService();
 }
-
 class _MyAppState extends State<MyApp> {
   String text = "Stop Service";
   List<dynamic> list = [];
@@ -102,6 +94,12 @@ class _MyAppState extends State<MyApp> {
                     }
                     setState(() {});
                   },
+                ),
+                TextField(
+                  decoration: InputDecoration(hintText: "Usuario"),
+                ),
+                TextField(
+                  decoration: InputDecoration(hintText: "Senha"),
                 ),
               ],
             ),
